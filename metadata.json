@@ -1,0 +1,8 @@
+{
+  "name": "APPS Dashboard",
+  "description": "Aero-Propulsion Performance Standard dashboard for CFD-based propulsion flow and aerodynamic interface analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
