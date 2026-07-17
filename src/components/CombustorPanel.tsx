@@ -33,62 +33,59 @@ export default function CombustorPanel() {
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-3xl font-bold tracking-tight">Combustor Uniformity</h2>
-        <p className="text-zinc-400">Flow distortion index (DI &lt; 10%) and swirl number optimization for flame stability.</p>
+    <div className="space-y-12">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-4xl font-serif text-ink italic">Combustor Uniformity</h2>
+        <p className="text-muted text-lg">Flow distortion index (DI &lt; 10%) and swirl number optimization for flame stability.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Distortion Index */}
-        <div className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-xl space-y-4">
-          <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Target className="w-4 h-4 text-emerald-500" />
-            Distortion Index (DI) %
-          </h3>
-          <div className="h-[300px] w-full">
+        <div className="p-8 bg-surface-dark rounded-xl space-y-6 shadow-2xl">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-muted-soft flex items-center gap-2">
+              <Target className="w-4 h-4 text-primary" />
+              Distortion Index (DI) %
+            </h3>
+            <div className="text-[10px] px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded-full font-bold">
+              THRESHOLD: 10%
+            </div>
+          </div>
+          <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={distortionData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-                <XAxis dataKey="mach" stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} domain={[0, 15]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#252320" vertical={false} />
+                <XAxis dataKey="mach" stroke="#6c6a64" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis stroke="#6c6a64" fontSize={10} tickLine={false} axisLine={false} domain={[0, 15]} />
                 <Tooltip 
-                  cursor={{ fill: '#27272a' }}
-                  contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}
+                  cursor={{ fill: '#252320' }}
+                  contentStyle={{ backgroundColor: '#1f1e1b', border: '1px solid #252320', borderRadius: '12px', fontSize: '12px' }}
                 />
-                <Bar dataKey="di" fill="#10b981" radius={[4, 4, 0, 0]} barSize={40} />
+                <Bar dataKey="di" fill="#cc785c" radius={[4, 4, 0, 0]} barSize={32} />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-          <div className="flex justify-center gap-4 text-[10px] text-zinc-500 font-mono">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-emerald-500 rounded-sm" />
-              Calculated DI
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-px bg-zinc-600 border-t border-dashed" />
-              Safety Threshold (10%)
-            </div>
           </div>
         </div>
 
         {/* Swirl Number Radar */}
-        <div className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-xl space-y-4">
-          <h3 className="text-sm font-semibold flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-purple-500" />
-            Swirl Strength Profile
-          </h3>
-          <div className="h-[300px] w-full">
+        <div className="p-8 bg-surface-dark rounded-xl space-y-6 shadow-2xl">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-muted-soft flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-purple-400" />
+              Swirl Strength Profile
+            </h3>
+          </div>
+          <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={swirlRadar}>
-                <PolarGrid stroke="#27272a" />
-                <PolarAngleAxis dataKey="subject" stroke="#71717a" fontSize={10} />
-                <PolarRadiusAxis angle={30} domain={[0, 1]} stroke="#71717a" fontSize={8} />
+                <PolarGrid stroke="#252320" />
+                <PolarAngleAxis dataKey="subject" stroke="#6c6a64" fontSize={10} />
+                <PolarRadiusAxis angle={30} domain={[0, 1]} stroke="#6c6a64" fontSize={8} />
                 <Radar
                   name="Current Design"
                   dataKey="A"
-                  stroke="#8b5cf6"
-                  fill="#8b5cf6"
+                  stroke="#a78bfa"
+                  fill="#a78bfa"
                   fillOpacity={0.5}
                 />
               </RadarChart>
@@ -97,31 +94,28 @@ export default function CombustorPanel() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-4 border border-zinc-800 rounded-lg bg-zinc-900/30">
-          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Recirculation Zone</span>
-          <p className="text-lg font-bold mt-1">12.4 cm³</p>
-          <div className="mt-2 h-1 bg-zinc-800 rounded-full overflow-hidden">
-            <div className="w-[65%] h-full bg-emerald-500" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { label: 'Recirculation Zone', value: '12.4 cm³', sub: 'Optimal Range', color: 'bg-emerald-500', progress: 65 },
+          { label: 'Ignition Stability', value: 'HIGH', sub: 'Swirl 0.4~0.6 OK', color: 'bg-primary', progress: 88 },
+          { label: 'Max Heat Release', value: '1.2 GW/m³', sub: 'Safety Margin OK', color: 'bg-amber-500', progress: 45 },
+        ].map((item) => (
+          <div key={item.label} className="p-6 border border-hairline rounded-lg bg-surface-card space-y-4">
+            <div className="space-y-1">
+              <span className="text-[10px] font-bold text-muted-soft uppercase tracking-widest">{item.label}</span>
+              <p className="text-2xl font-serif italic text-ink">{item.value}</p>
+            </div>
+            <div className="space-y-2">
+              <div className="h-1.5 bg-hairline rounded-full overflow-hidden">
+                <div 
+                  className={cn("h-full transition-all duration-500", item.color)} 
+                  style={{ width: `${item.progress}%` }} 
+                />
+              </div>
+              <p className="text-[10px] text-muted-soft font-medium font-mono">{item.sub}</p>
+            </div>
           </div>
-          <p className="text-[10px] text-zinc-500 mt-1">Within optimal ignition range</p>
-        </div>
-        <div className="p-4 border border-zinc-800 rounded-lg bg-zinc-900/30">
-          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Ignition Stability</span>
-          <p className="text-lg font-bold mt-1">HIGH</p>
-          <div className="mt-2 h-1 bg-zinc-800 rounded-full overflow-hidden">
-            <div className="w-[88%] h-full bg-blue-500" />
-          </div>
-          <p className="text-[10px] text-zinc-500 mt-1">Swirl 0.4~0.6 compliant</p>
-        </div>
-        <div className="p-4 border border-zinc-800 rounded-lg bg-zinc-900/30">
-          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Max Heat Release</span>
-          <p className="text-lg font-bold mt-1">1.2 GW/m³</p>
-          <div className="mt-2 h-1 bg-zinc-800 rounded-full overflow-hidden">
-            <div className="w-[45%] h-full bg-rose-500" />
-          </div>
-          <p className="text-[10px] text-zinc-500 mt-1">Structural safety margin ok</p>
-        </div>
+        ))}
       </div>
     </div>
   );

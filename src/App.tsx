@@ -38,12 +38,12 @@ export default function App() {
   ];
 
   return (
-    <div className="flex h-screen bg-[#09090b] text-zinc-100 font-sans overflow-hidden">
+    <div className="flex h-screen bg-canvas text-body font-sans overflow-hidden">
       {/* Sidebar */}
       <motion.aside 
         initial={false}
         animate={{ width: isSidebarOpen ? 280 : 80 }}
-        className="border-r border-zinc-800 bg-[#09090b] flex flex-col z-20"
+        className="border-r border-hairline bg-canvas flex flex-col z-20"
       >
         <div className="p-6 flex items-center justify-between">
           {isSidebarOpen && (
@@ -52,15 +52,15 @@ export default function App() {
               animate={{ opacity: 1 }}
               className="flex items-center gap-2"
             >
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold tracking-tight text-xl">APPS</span>
+              <span className="font-serif font-medium tracking-tight text-xl text-ink italic">APPS</span>
             </motion.div>
           )}
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 hover:bg-zinc-800 rounded-md transition-colors"
+            className="p-2 hover:bg-surface-soft rounded-md transition-colors text-muted"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -72,33 +72,35 @@ export default function App() {
               key={item.id}
               onClick={() => setActiveTab(item.id as Tab)}
               className={cn(
-                "w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 group relative",
-                activeTab === item.id ? "bg-blue-600 text-white" : "hover:bg-zinc-800 text-zinc-400"
+                "w-full flex items-center gap-3 px-3 py-3 rounded-md transition-all duration-200 group relative text-sm font-medium",
+                activeTab === item.id 
+                  ? "bg-surface-card text-ink" 
+                  : "hover:bg-surface-soft text-muted hover:text-ink"
               )}
             >
-              <item.icon className={cn("w-5 h-5", activeTab === item.id ? "text-white" : "group-hover:text-zinc-200")} />
+              <item.icon className={cn("w-5 h-5", activeTab === item.id ? "text-primary" : "group-hover:text-muted")} />
               {isSidebarOpen && (
-                <span className="font-medium text-sm truncate">{item.label}</span>
+                <span className="truncate">{item.label}</span>
               )}
               {activeTab === item.id && (
                 <motion.div 
                   layoutId="active-pill"
-                  className="absolute left-0 w-1 h-6 bg-white rounded-r-full"
+                  className="absolute left-0 w-1 h-6 bg-primary rounded-r-full"
                 />
               )}
             </button>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-zinc-800">
+        <div className="p-4 border-t border-hairline">
           <div className={cn("flex items-center gap-3 px-3 py-2", !isSidebarOpen && "justify-center")}>
-            <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">
+            <div className="w-8 h-8 rounded-full bg-surface-cream-strong flex items-center justify-center text-xs font-bold text-muted-soft">
               AI
             </div>
             {isSidebarOpen && (
               <div className="flex flex-col">
-                <span className="text-xs font-semibold">User System</span>
-                <span className="text-[10px] text-zinc-500">Administrator</span>
+                <span className="text-xs font-semibold text-ink">User System</span>
+                <span className="text-[10px] text-muted">Administrator</span>
               </div>
             )}
           </div>
@@ -106,20 +108,20 @@ export default function App() {
       </motion.aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto relative bg-grid-zinc-900/[0.2]">
-        <header className="h-16 border-b border-zinc-800 flex items-center justify-between px-8 bg-[#09090b]/80 backdrop-blur-md sticky top-0 z-10">
+      <main className="flex-1 overflow-y-auto relative">
+        <header className="h-16 border-b border-hairline flex items-center justify-between px-8 bg-canvas/80 backdrop-blur-md sticky top-0 z-10">
           <div>
-            <h1 className="text-sm font-medium text-zinc-400 flex items-center gap-2">
-              Project: <span className="text-zinc-100">Aero-Propulsion Performance Standard (APPS)</span>
+            <h1 className="text-sm font-medium text-muted flex items-center gap-2">
+              Project: <span className="text-ink font-serif italic">Aero-Propulsion Performance Standard</span>
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded text-xs font-medium transition-colors border border-zinc-700">
+            <button className="flex items-center gap-2 px-4 py-1.5 bg-canvas hover:bg-surface-soft text-ink rounded-md text-xs font-medium transition-colors border border-hairline">
               <Download className="w-3.5 h-3.5" />
               Export Report
             </button>
-            <div className="h-4 w-px bg-zinc-700 mx-2" />
-            <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <div className="h-4 w-px bg-hairline mx-2" />
+            <div className="flex items-center gap-2 text-xs font-mono text-muted">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 HPC: ONLINE
@@ -128,7 +130,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-12 max-w-7xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -152,50 +154,50 @@ export default function App() {
 
 function OverviewPanel({ setActiveTab }: { setActiveTab: (tab: Tab) => void }) {
   const stats = [
-    { label: "Pressure Recovery", value: "0.88", unit: "Avg", color: "text-blue-500", icon: Gauge },
-    { label: "Distortion Index", value: "6.2", unit: "%", color: "text-amber-500", icon: Activity },
-    { label: "Swirl Number", value: "0.48", unit: "Ratio", color: "text-emerald-500", icon: Wind },
-    { label: "Max Wall Temp", value: "2840", unit: "K", color: "text-rose-500", icon: Thermometer },
+    { label: "Pressure Recovery", value: "0.88", unit: "Avg", color: "text-primary", icon: Gauge },
+    { label: "Distortion Index", value: "6.2", unit: "%", color: "text-primary", icon: Activity },
+    { label: "Swirl Number", value: "0.48", unit: "Ratio", color: "text-primary", icon: Wind },
+    { label: "Max Wall Temp", value: "2840", unit: "K", color: "text-primary", icon: Thermometer },
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-3xl font-bold tracking-tight">Performance Envelope Overview</h2>
-        <p className="text-zinc-400">Consolidated CFD metrics for APPS compliance monitoring.</p>
+    <div className="space-y-12">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-5xl font-serif text-ink italic leading-tight">Performance Envelope Overview</h2>
+        <p className="text-lg text-body max-w-2xl">Consolidated CFD metrics for APPS compliance monitoring. Performance indicators are calculated against baseline flight envelopes.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
           <motion.div 
             key={stat.label}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors group"
+            className="p-8 bg-surface-card border border-hairline rounded-lg transition-all hover:bg-surface-cream-strong group"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className={cn("p-2 rounded-lg bg-zinc-800", stat.color)}>
+            <div className="flex items-center justify-between mb-6">
+              <div className={cn("p-2 rounded-md bg-canvas border border-hairline", stat.color)}>
                 <stat.icon className="w-5 h-5" />
               </div>
-              <span className="text-[10px] font-bold text-zinc-600 tracking-widest uppercase">Live Metric</span>
+              <span className="text-[10px] font-bold text-muted-soft tracking-widest uppercase">Live Metric</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold">{stat.value}</span>
-              <span className="text-xs text-zinc-500 font-medium">{stat.unit}</span>
+              <span className="text-4xl font-serif text-ink italic">{stat.value}</span>
+              <span className="text-xs text-muted-soft font-medium font-mono">{stat.unit}</span>
             </div>
-            <p className="text-xs text-zinc-400 mt-2">{stat.label}</p>
+            <p className="text-sm text-muted font-medium mt-3">{stat.label}</p>
           </motion.div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-4">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-blue-500" />
-            Requirement Compliance Status
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="lg:col-span-2 space-y-6">
+          <h3 className="text-2xl font-serif italic text-ink flex items-center gap-3">
+            <ShieldCheck className="w-6 h-6 text-primary" />
+            Requirement Compliance
           </h3>
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-4">
             {[
               { id: 'intake', name: 'Intake Pressure Recovery (PR > 0.8)', status: 'PASS', margin: '+10%' },
               { id: 'combustor', name: 'Distortion Index (DI < 10%)', status: 'PASS', margin: '+3.8%' },
@@ -205,49 +207,57 @@ function OverviewPanel({ setActiveTab }: { setActiveTab: (tab: Tab) => void }) {
               <button 
                 key={req.name}
                 onClick={() => setActiveTab(req.id as Tab)}
-                className="w-full flex items-center justify-between p-4 bg-zinc-900/30 border border-zinc-800 rounded-lg hover:bg-zinc-800/50 transition-colors"
+                className="w-full flex items-center justify-between p-6 bg-canvas border border-hairline rounded-lg hover:bg-surface-soft transition-all group"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
                   <div className={cn(
-                    "w-2 h-2 rounded-full",
-                    req.status === 'PASS' ? "bg-emerald-500" : "bg-amber-500"
+                    "w-2.5 h-2.5 rounded-full",
+                    req.status === 'PASS' ? "bg-emerald-500" : "bg-primary"
                   )} />
-                  <span className="text-sm font-medium">{req.name}</span>
+                  <span className="text-base font-medium text-ink group-hover:text-primary transition-colors">{req.name}</span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
                   <span className={cn(
-                    "text-[10px] font-bold px-2 py-0.5 rounded",
-                    req.status === 'PASS' ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"
+                    "text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider",
+                    req.status === 'PASS' ? "bg-emerald-500/10 text-emerald-600" : "bg-primary/10 text-primary"
                   )}>
                     {req.status}
                   </span>
-                  <span className="text-xs text-zinc-500 w-16 text-right font-mono">{req.margin}</span>
-                  <ChevronRight className="w-4 h-4 text-zinc-700" />
+                  <span className="text-xs text-muted-soft w-16 text-right font-mono">{req.margin}</span>
+                  <ChevronRight className="w-4 h-4 text-muted group-hover:text-primary transition-colors" />
                 </div>
               </button>
             ))}
           </div>
         </div>
 
-        <div className="bg-zinc-900/30 border border-zinc-800 rounded-xl p-6 space-y-6">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-500">Quick Actions</h3>
-          <div className="space-y-3">
-            <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+        <div className="bg-surface-dark rounded-xl p-8 space-y-8 text-on-dark flex flex-col shadow-2xl">
+          <div className="space-y-2">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-muted-soft">Operational Controls</h3>
+            <p className="text-xs text-on-dark-soft">Execute system-wide performance verification scripts.</p>
+          </div>
+          
+          <div className="space-y-4">
+            <button className="w-full py-4 bg-primary hover:bg-primary-active text-white rounded-md text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
               <Activity className="w-4 h-4" />
               Run Auto-Post Process
             </button>
-            <button className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg text-sm font-semibold transition-colors border border-zinc-700 flex items-center justify-center gap-2">
+            <button className="w-full py-4 bg-surface-dark-elevated hover:bg-surface-dark-soft text-on-dark rounded-md text-sm font-semibold transition-all border border-white/5 flex items-center justify-center gap-2">
               <Wind className="w-4 h-4" />
               Check Mesh Sensitivity
             </button>
-            <button className="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg text-sm font-semibold transition-colors border border-zinc-700 flex items-center justify-center gap-2">
+            <button className="w-full py-4 bg-surface-dark-elevated hover:bg-surface-dark-soft text-on-dark rounded-md text-sm font-semibold transition-all border border-white/5 flex items-center justify-center gap-2">
               <Download className="w-4 h-4" />
               Download Structural Map
             </button>
           </div>
-          <div className="pt-4 border-t border-zinc-800 mt-auto">
-            <div className="flex items-center justify-between text-[10px] font-mono text-zinc-600">
-              <span>SOLVER: RANS/k-w SST</span>
+
+          <div className="mt-auto pt-8 border-t border-white/5">
+            <div className="flex items-center justify-between text-[10px] font-mono text-muted-soft">
+              <span className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                RANS/k-w SST
+              </span>
               <span>v1.2.0</span>
             </div>
           </div>
